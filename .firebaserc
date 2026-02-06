@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "library-c06d2"
+  },
+  "targets": {
+    "library-c06d2": {
+      "hosting": {
+        "gbskwt": [
+          "gbskwt"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
