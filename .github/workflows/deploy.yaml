@@ -1,0 +1,48 @@
+name: Deploy to Firebase Hosting
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2.13.0
+        with:
+          flutter-version: '3.38.5'
+          channel: 'stable'
+
+      - name: Flutter clean
+        run: flutter clean
+      
+      - name: Flutter pub get
+        run: flutter pub get
+
+      - name: Build Flutter Web
+        run: flutter build web
+
+      - name: clear
+        run: firebase target:clear hosting gbskwt
+      
+      - name: apply target
+        run: firebase target:apply hosting gbskwt gbskwt
+
+      - name: Deploy to Firebase
+        run: firebase deploy --only hosting:gbskwt
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIRE_TOKEN }}
